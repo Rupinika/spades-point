@@ -18,9 +18,14 @@ function App() {
     <>
       <Navbar />
       <button onClick={getInfo}>GetInfo</button>
-      {products.map((element, index) => {
-        return <Cards img={element.image_link} title={element.description} />
-      })}
+      <div className="container">
+        <div className='row'>
+          {products.map((element, index) => {
+            return <Cards img={element.image_link} title={element.description} />
+          })}
+        </div>
+      </div>
+
     </>
   )
 }
