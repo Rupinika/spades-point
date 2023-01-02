@@ -1,25 +1,28 @@
 import logo from './logo.svg';
 import './App.css';
+import Cards from './components/Cards';
+import { useState } from 'react';
+import Navbar from './components/Navbar';
 
 function App() {
+  const [products, setProducts] = useState([])
+  let information = ""
+  let convertedInfo = ""
+  async function getInfo() {
+    information = await fetch("http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline")
+    convertedInfo = await information.json()
+    console.log(convertedInfo)
+    setProducts(convertedInfo)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <Navbar />
+      <button onClick={getInfo}>GetInfo</button>
+      {products.map((element, index) => {
+        return <Cards img={element.image_link} title={element.description} />
+      })}
+    </>
+  )
 }
 
 export default App;
